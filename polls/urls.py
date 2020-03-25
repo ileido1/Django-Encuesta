@@ -12,10 +12,11 @@ urlpatterns = [
 from django.urls import path
 from rest_framework import routers
 # from . import views
-from .viewsets import QuestionViewSet
+from .viewsets import QuestionViewSet,ChoiceViewSet
 
 router = routers.SimpleRouter()
 router.register(r'question', QuestionViewSet)
+router.register(r'choice', ChoiceViewSet)
 
 #app_name = 'polls'
 urlpatterns = router.urls
