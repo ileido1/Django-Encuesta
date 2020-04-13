@@ -1,28 +1,19 @@
-"""from django.urls import path
 
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from . import views
-app_name = 'polls'
+from .views import QuestionViewSet,ChoiceViewSet
+from rest_framework import permissions
+
+# Create a router and register our viewsets with it.
+router = DefaultRouter()
+router.register(r'questions', views.QuestionViewSet)
+router.register(r'choices', views.ChoiceViewSet)
+router.register(r'users', views.UserViewSet)
+router.register(r'results', views.ResultsViewSet)
+
+# The API URLs are now determined automatically by the router.
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('<int:question_id>/', views.detail,name='detail'),
-    path('<int:question_id>/results/', views.results,name='results'),
-    path('<int:question_id>/vote/', views.vote,name='vote')
-]
-"""
-from django.urls import path
-from rest_framework import routers
-# from . import views
-from .viewsets import QuestionViewSet,ChoiceViewSet
-
-router = routers.SimpleRouter()
-router.register(r'question', QuestionViewSet)
-router.register(r'choice', ChoiceViewSet)
-
-#app_name = 'polls'
-urlpatterns = router.urls
-"""[
-    path('', views.IndexView.as_view(), name='index'),
-    path('<int:pk>/', views.DetailView.as_view(), name='detail'),
+    path('', include(router.urls)),
     path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
-    path('<int:question_id>/vote/', views.vote, name='vote'),
-]"""
+]
