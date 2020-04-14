@@ -11,19 +11,14 @@ class QuestionSerializer(serializers.ModelSerializer):
 class ChoiceSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Choice
-		fields = ['question','choice_text','votes']
+		fields = '__all__'
 
 class ResultsSerializer(serializers.ModelSerializer):
-    # choices = serializers.SlugRelatedField(
-    #     many=True,
-    #     read_only=True,
-    #     slug_field='choice_text'
-    #  )
     choices = ChoiceSerializer(many=True, read_only=True)
 
     class Meta:
         model = Question
-        fields = ['question_text','choices']
+        fields = ['question_text','pub_date','choices']
 
 class UserSerializer(serializers.ModelSerializer):
     # question = serializers.PrimaryKeyRelatedField(many=True, queryset=Question.objects.all())

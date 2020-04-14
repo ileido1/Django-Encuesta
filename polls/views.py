@@ -31,17 +31,13 @@ class ChoiceViewSet(viewsets.ModelViewSet):
     queryset = Choice.objects.all()
     serializer_class = ChoiceSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    @action(detail=True, methods=['put'])
+
+    @action(detail=True, methods=['get'])
     def vote(self, request, pk=None):
         choice = self.get_object()
-        serializer = ChoiceSerializer(data=request.data)
-        if serializer.is_valid():
-            choice.votes += 1
-            choice.save()
-            return Response({'status': 'choice set'})
-        else:
-            return Response(serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
+        choice.votes += 1
+        choice.save()
+        return Response({'status': 'choice set'})
 class UserViewSet(viewsets.ModelViewSet):
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
